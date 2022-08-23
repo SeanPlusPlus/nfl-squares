@@ -19,6 +19,8 @@ const Board = () => {
                 onClick={handleClick}
                 className="border border-sky-500 w-8 h-8 hover:bg-sky-500 cursor-pointer"
               >
+                <div className="text-xs text-center pt-1">
+                </div>
               </div>
             )
           )))}
