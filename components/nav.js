@@ -32,9 +32,9 @@ const Nav = () => {
       <div className="navbar shadow-lg bg-neutral text-neutral-content">
         <div className="flex-1">
           <Link href="/">
-            <a className="btn btn-outline normal-case text-xl ml-2">
+            <button className="btn btn-outline normal-case text-xl ml-2">
               <span className="text-slate-300">NFL Squares</span>
-            </a>
+            </button>
           </Link>
         </div>
         <div className="flex-none gap-2">
