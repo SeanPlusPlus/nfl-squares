@@ -38,7 +38,7 @@ const Nav = () => {
           </Link>
         </div>
         <div className="flex-none gap-2">
-          <a className="mr-2 link link-hover" onClick={handleOpenAbout}>About</a>
+          <button className="mr-2 link link-hover" onClick={handleOpenAbout}>About</button>
           { account && (
             <>
               <div className="dropdown dropdown-end">
@@ -52,9 +52,11 @@ const Nav = () => {
                     </button>
                   </li>
                   <li>
-                    <a href="/">
-                      Logout
-                    </a>
+                    <Link href="/">
+                      <button>
+                        Logout
+                      </button>
+                    </Link>
                   </li>
                 </ul>
               </div>
