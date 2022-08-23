@@ -5,7 +5,7 @@ import Home from '../components/home'
 
 export default function App() {
   return (
-    <div className="min-h-screen grid-bg">
+    <div className="grid-bg">
       <Header />
       <Nav />
       <Home />
