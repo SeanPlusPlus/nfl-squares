@@ -81,7 +81,7 @@ const NFT = () => {
      */
     if (!currentAccount) {
       return (
-        <div className="connect-wallet-container">
+        <div className="text-center">
           <img
             src="https://64.media.tumblr.com/tumblr_mbia5vdmRd1r1mkubo1_500.gifv"
             alt="Monty Python Gif"
@@ -110,15 +110,14 @@ const NFT = () => {
       <main className="flex md:mt-12">
         <div className="m-auto">
 
-          <div className="App">
-            <div className="container">
-              <div className="header-container">
-                <p className="header gradient-text">⚔️ Metaverse Slayer ⚔️</p>
-                <p className="sub-text">Team up to protect the Metaverse!</p>
+          <div className="">
+            <div className="">
+              <div className="text-center mb-2">
+                <p className="">⚔️ Metaverse Slayer ⚔️</p>
+                <p className="">Team up to protect the Metaverse!</p>
               </div>
               {renderContent()}
-              <div className="flex mt-2">
-                <img alt="Twitter Logo" className="h-12 pt-2" src='/twitter.svg' />
+              <div className="text-center mt-2">
                 <a
                   className="pt-4"
                   href={TWITTER_LINK}
