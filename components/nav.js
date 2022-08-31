@@ -1,30 +1,28 @@
 import Link from 'next/link'
-import { useState, useContext } from 'react'
+import { useContext } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 
 const Nav = () => {
-  const [ modalProfile, setModalProfile ] = useState('')
-  const [ modalAbout, setModalAbout ] = useState('')
-
   const {
     imx,
     account,
+
+    // modalAbout
+    setModalAbout,
   } = useContext(GlobalContext)
+
+  const handleLogin = () => {
+    console.log('login');
+  }
   
   const handleOpenProfile = () => {
-    setModalProfile('modal-open')
   }
 
   const handleCloseProfile = () => {
-    setModalProfile('')
   }
 
   const handleOpenAbout = () => {
-    setModalAbout('modal-open')
-  }
-
-  const handleCloseAbout = () => {
-    setModalAbout('')
+    setModalAbout(true)
   }
 
   return (
@@ -39,7 +37,7 @@ const Nav = () => {
         </div>
         <div className="flex-none gap-2">
           <button className="mr-2 link link-hover" onClick={handleOpenAbout}>About</button>
-          { account && (
+          { account ? (
             <>
               <div className="dropdown dropdown-end">
                 <label tabIndex="0" className="btn btn-outline text-stone-50">
@@ -53,20 +51,22 @@ const Nav = () => {
                   </li>
                   <li>
                     <Link href="/">
-                      <button>
-                        Logout
-                      </button>
+                      <button className="mr-2 link link-hover" onClick={handleLogin}>Login</button>
                     </Link>
                   </li>
                 </ul>
               </div>
+            </>
+          ) : (
+            <>
+              <button className="mr-2 link link-hover" onClick={handleLogin}>Login</button>
             </>
           )}
         </div>
       </div>
 
       { account && (
-        <div className={`modal ${modalProfile}`}>
+        <div className={`modal ${modal.profile}`}>
           <div className="modal-box">
             <h3 className="font-bold text-xl flex">
               <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
@@ -97,28 +97,6 @@ const Nav = () => {
           </div>
         </div>
       )}
-
-      <div className={`modal ${modalAbout}`}>
-        <div className="modal-box relative">
-          <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={handleCloseAbout}>✕</label>
-          <h3 className="font-bold text-xl flex">
-            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="ml-1 text-xl mb-4">
-              About
-            </span>
-          </h3>
-          <div>
-            <p className="pb-4">
-              Hello World!
-            </p>
-          </div>
-          <div className="modal-action pt-5">
-            <label htmlFor="my-modal" className="btn" onClick={handleCloseAbout}>Close</label>
-          </div>
-        </div>
-      </div>
     </>
   )
 }
