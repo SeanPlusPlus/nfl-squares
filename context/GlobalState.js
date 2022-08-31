@@ -11,7 +11,6 @@ const { env: { NODE_ENV }} = process
 const initialState = {
   NODE_ENV,
   account: null,
-  modalAbout: null,
 }
 
 export const GlobalContext = createContext(initialState);
@@ -29,13 +28,6 @@ export const GlobalProvider = ({
     });
   }
 
-  function setModalAbout(data) {
-    dispatch({
-      type: 'UPDATE_MODAL_ABOUT',
-      payload: data
-    });
-  }
-
   useEffect(() => {
     log('state', 'rgb(217, 38, 169)', state);
   }, [state])
@@ -44,7 +36,6 @@ export const GlobalProvider = ({
       {
         ...initialState,
         setAccount,
-        setModalAbout,
       }
     } > {
       children

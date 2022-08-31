@@ -12,11 +12,6 @@ export default (state, action) => {
         ...state,
         account: action.payload,
       }
-    case 'UPDATE_MODAL_ABOUT':
-      return {
-        ...state,
-        modalAbout: action.payload,
-      }
     default:
       return state;
   }
