@@ -77,7 +77,7 @@ const SelectCharacter = ({ setCharacterNFT }) => {
         <img src={character.imageURI} alt={character.name} className="h-40 w-40 object-scale-down" />
         <button
           type="button"
-          className="character-mint-button"
+          className="btn"
           onClick={()=> mintCharacterNFTAction(index)}
         >{`Mint ${character.name}`}</button>
       </div>
