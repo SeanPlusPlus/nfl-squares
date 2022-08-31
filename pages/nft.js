@@ -7,10 +7,7 @@ import Header from '../components/header'
 import Nav from '../components/nav'
 import SelectCharacter from '../components/SelectCharacter';
 import myEpicGame from '../utils/MyEpicGame.json'
-
-// Constants
-const TWITTER_HANDLE = 'SeanPlusPlus';
-const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
+import { transformCharacterData } from '../utils/character'
 
 const NFT = () => {
 
@@ -126,16 +123,6 @@ const NFT = () => {
     }
   }, [currentAccount]);
 
-  const transformCharacterData = (characterData) => {
-    return {
-      name: characterData.name,
-      imageURI: characterData.imageURI,
-      hp: characterData.hp.toNumber(),
-      maxHp: characterData.maxHp.toNumber(),
-      attackDamage: characterData.attackDamage.toNumber(),
-    };
-  };
-
   const renderContent = () => {
     /*
      * Scenario #1
@@ -178,14 +165,6 @@ const NFT = () => {
                 <p className="">Team up to protect the Metaverse!</p>
               </div>
               {renderContent()}
-              <div className="text-center mt-2">
-                <a
-                  className="pt-4"
-                  href={TWITTER_LINK}
-                  target="_blank"
-                  rel="noreferrer"
-                >{`built by @${TWITTER_HANDLE}`}</a>
-              </div>
             </div>
           </div>
 
