@@ -1,18 +1,25 @@
-import { useEffect, useState } from 'react'
+import { useContext, useEffect, useState } from 'react'
+import { GlobalContext } from '../context/GlobalState'
+import { ethers } from 'ethers'
 
 // components
 import Header from '../components/header'
 import Nav from '../components/nav'
 import SelectCharacter from '../components/SelectCharacter';
+import myEpicGame from '../utils/MyEpicGame.json'
 
 // Constants
 const TWITTER_HANDLE = 'SeanPlusPlus';
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 
 const NFT = () => {
+
+  const {
+    CONTRACT_ADDRESS
+  } = useContext(GlobalContext)
+  
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
-
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -73,7 +80,61 @@ const NFT = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
+
+    const checkNetwork = async () => {
+      try { 
+        if (window.ethereum.networkVersion !== '80001') {
+          alert("Please connect to Mumbai!")
+        }
+      } catch(error) {
+        console.log(error)
+      }
+    }
+    checkNetwork();
   }, []);
+
+  useEffect(() => {
+    /*
+     * The function we will call that interacts with our smart contract
+     */
+    const fetchNFTMetadata = async () => {
+      console.log('Checking for Character NFT on address:', currentAccount);
+  
+      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const signer = provider.getSigner();
+      const gameContract = new ethers.Contract(
+        CONTRACT_ADDRESS,
+        myEpicGame.abi,
+        signer
+      );
+  
+      const txn = await gameContract.checkIfUserHasNFT();
+      if (txn.name) {
+        console.log('User has character NFT');
+        setCharacterNFT(transformCharacterData(txn));
+      } else {
+        console.log('No character NFT found');
+      }
+    };
+  
+    /*
+     * We only want to run this, if we have a connected wallet
+     */
+    if (currentAccount) {
+      console.log('CurrentAccount:', currentAccount);
+      fetchNFTMetadata();
+    }
+  }, [currentAccount]);
+
+  const transformCharacterData = (characterData) => {
+    return {
+      name: characterData.name,
+      imageURI: characterData.imageURI,
+      hp: characterData.hp.toNumber(),
+      maxHp: characterData.maxHp.toNumber(),
+      attackDamage: characterData.attackDamage.toNumber(),
+    };
+  };
 
   const renderContent = () => {
     /*
