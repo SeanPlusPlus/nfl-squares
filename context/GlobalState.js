@@ -10,6 +10,7 @@ const { env: { NODE_ENV }} = process
 
 const initialState = {
   NODE_ENV,
+  CONTRACT_ADDRESS: '0x1deb9cEd11322c1a3827B952BB7802d5Df75fedE',
   account: null,
 }
 
