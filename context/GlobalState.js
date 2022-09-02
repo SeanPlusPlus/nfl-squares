@@ -10,8 +10,9 @@ const { env: { NODE_ENV }} = process
 
 const initialState = {
   NODE_ENV,
-  CONTRACT_ADDRESS: '0xC58db90086C6Cf98F39A2D6474610a2650228c5f',
+  CONTRACT_ADDRESS: '0xFA5cbBE22A6841dE111DC886BDfEA30FDaC3b838',
   account: null,
+  networkVersion: null,
 }
 
 export const GlobalContext = createContext(initialState);
@@ -29,6 +30,13 @@ export const GlobalProvider = ({
     });
   }
 
+  function setNetworkVersion(data) {
+    dispatch({
+      type: 'UPDATE_NETWORK_VERSION',
+      payload: data
+    });
+  }
+
   useEffect(() => {
     log('state', 'rgb(217, 38, 169)', state);
   }, [state])
@@ -37,6 +45,7 @@ export const GlobalProvider = ({
       {
         ...initialState,
         setAccount,
+        setNetworkVersion,
       }
     } > {
       children

@@ -13,11 +13,13 @@ import Arena from '../components/Arena';
 const NFT = () => {
 
   const {
-    CONTRACT_ADDRESS
+    CONTRACT_ADDRESS,
+    setNetworkVersion,
   } = useContext(GlobalContext)
   
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
+  const [networkVersionWarning, setNetworkVersionWarning] = useState('');
 
   const checkIfWalletIsConnected = async () => {
     try {
@@ -80,9 +82,12 @@ const NFT = () => {
     checkIfWalletIsConnected();
 
     const checkNetwork = async () => {
+      setNetworkVersion(window.ethereum.networkVersion)
       try { 
         if (window.ethereum.networkVersion !== '80001') {
-          alert("Please connect to Mumbai!")
+          setNetworkVersionWarning('modal-open')
+        } else {
+          setNetworkVersionWarning('')
         }
       } catch(error) {
         console.log(error)
@@ -173,6 +178,26 @@ const NFT = () => {
 
         </div>
       </main>
+
+
+      <div className={`modal ${networkVersionWarning}`}>
+        <div className="modal-box relative">
+          <h3 className="font-bold text-xl flex">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M11.412 15.655L9.75 21.75l3.745-4.012M9.257 13.5H3.75l2.659-2.849m2.048-2.194L14.25 2.25 12 10.5h8.25l-4.707 5.043M8.457 8.457L3 3m5.457 5.457l7.086 7.086m0 0L21 21" />
+            </svg>
+            <span className="ml-1 text-xl mb-4">
+              Metamask Network
+            </span>
+          </h3>
+          <div>
+            <p className="pb-4">
+              Heads up! You need to connect to the Polygon Mumbai Network
+            </p>
+          </div>
+        </div>
+      </div>
+
     </div>
   );
 };

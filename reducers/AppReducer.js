@@ -12,6 +12,11 @@ export default (state, action) => {
         ...state,
         account: action.payload,
       }
+    case 'UPDATE_NETWORK_VERSION':
+      return {
+        ...state,
+        networkVersion: action.payload,
+      }
     default:
       return state;
   }
