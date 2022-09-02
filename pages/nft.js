@@ -1,13 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { ethers } from 'ethers'
+import SelectCharacter from '../components/SelectCharacter';
+import myEpicGame from '../utils/MyEpicGame.json'
+import { transformCharacterData } from '../utils/character'
 
 // components
 import Header from '../components/header'
 import Nav from '../components/nav'
-import SelectCharacter from '../components/SelectCharacter';
-import myEpicGame from '../utils/MyEpicGame.json'
-import { transformCharacterData } from '../utils/character'
+import Arena from '../components/Arena';
 
 const NFT = () => {
 
@@ -147,6 +148,8 @@ const NFT = () => {
        */
     } else if (currentAccount && !characterNFT) {
       return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
+    } else if (currentAccount && characterNFT) {
+      return <Arena characterNFT={characterNFT} />;
     }
   };
 
