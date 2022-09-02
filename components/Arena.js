@@ -7,7 +7,7 @@ import { transformCharacterData } from '../utils/character'
 /*
  * We pass in our characterNFT metadata so we can show a cool card in our UI
  */
-const Arena = ({ characterNFT }) => {
+const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
   const {
     CONTRACT_ADDRESS
   } = useContext(GlobalContext)
@@ -19,20 +19,56 @@ const Arena = ({ characterNFT }) => {
 
   // UseEffects
   useEffect(() => {
-    /*
-     * Setup async function that will get the boss from our contract and sets in state
-     */
     const fetchBoss = async () => {
-      const bossTxn = await gameContract.getBigBoss();
-      console.log('Boss:', bossTxn);
-      setBoss(transformCharacterData(bossTxn));
+        const bossTxn = await gameContract.getBigBoss();
+        console.log('Boss:', bossTxn);
+        setBoss(transformCharacterData(bossTxn));
     };
-  
+
+    /*
+    * Setup logic when this event is fired off
+    */
+    const onAttackComplete = (from, newBossHp, newPlayerHp) => {
+        const bossHp = newBossHp.toNumber();
+        const playerHp = newPlayerHp.toNumber();
+        const sender = from.toString();
+
+        console.log(`AttackComplete: Boss Hp: ${bossHp} Player Hp: ${playerHp}`);
+
+        /*
+        * If player is our own, update both player and boss Hp
+        */
+        if (currentAccount === sender.toLowerCase()) {
+
+          setBoss((prevState) => {
+              return { ...prevState, hp: bossHp };
+          });
+          setCharacterNFT((prevState) => {
+              return { ...prevState, hp: playerHp };
+          });
+        }
+        /*
+        * If player isn't ours, update boss Hp only
+        */
+        else {
+          setBoss((prevState) => {
+              return { ...prevState, hp: bossHp };
+          });
+        }
+    }
+
     if (gameContract) {
-      /*
-       * gameContract is ready to go! Let's fetch our boss
-       */
-      fetchBoss();
+        fetchBoss();
+        gameContract.on('AttackComplete', onAttackComplete);
+    }
+
+    /*
+    * Make sure to clean up this event when this component is removed
+    */
+    return () => {
+        if (gameContract) {
+            gameContract.off('AttackComplete', onAttackComplete);
+        }
     }
   }, [gameContract]);
 
