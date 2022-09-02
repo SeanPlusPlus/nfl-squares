@@ -14,8 +14,28 @@ const Arena = ({ characterNFT }) => {
 
   // State
   const [gameContract, setGameContract] = useState(null);
+  const [boss, setBoss] = useState(null);
+
 
   // UseEffects
+  useEffect(() => {
+    /*
+     * Setup async function that will get the boss from our contract and sets in state
+     */
+    const fetchBoss = async () => {
+      const bossTxn = await gameContract.getBigBoss();
+      console.log('Boss:', bossTxn);
+      setBoss(transformCharacterData(bossTxn));
+    };
+  
+    if (gameContract) {
+      /*
+       * gameContract is ready to go! Let's fetch our boss
+       */
+      fetchBoss();
+    }
+  }, [gameContract]);
+
   useEffect(() => {
     const { ethereum } = window;
 
@@ -34,13 +54,56 @@ const Arena = ({ characterNFT }) => {
     }
   }, []);
 
+  const runAttackAction = async () => {};
+
   return (
     <div className="text-center">
       {/* Boss */}
-      <p>BOSS GOES HERE</p>
+      {boss && (
+      <div className="">
+        <div className="">
+          <h2>🔥 {boss.name} 🔥</h2>
+          <div className="text-center mx-auto">
+            <img src={boss.imageURI} alt={`Boss ${boss.name}`} className="h-80 object-scale-down mx-auto mb-2" />
+            <div className="">
+              <progress value={boss.hp} max={boss.maxHp} />
+              <p>{`${boss.hp} / ${boss.maxHp} HP`}</p>
+            </div>
+          </div>
+        </div>
+        <div className="">
+          <button className="btn" onClick={runAttackAction}>
+            {`💥 Attack ${boss.name}`}
+          </button>
+        </div>
+      </div>
+    )}
 
       {/* Character NFT */}
-      <p>CHARACTER NFT GOES HERE</p>
+      {characterNFT && (
+      <div className="">
+        <div className="">
+          <h2>Your Character</h2>
+          <div className="">
+            <div className="">
+              <h2>{characterNFT.name}</h2>
+              <img
+                className="h-40 object-scale-down mx-auto mb-2"
+                src={characterNFT.imageURI}
+                alt={`Character ${characterNFT.name}`}
+              />
+              <div className="">
+                <progress value={characterNFT.hp} max={characterNFT.maxHp} />
+                <p>{`${characterNFT.hp} / ${characterNFT.maxHp} HP`}</p>
+              </div>
+            </div>
+            <div className="">
+              <h4>{`⚔️ Attack Damage: ${characterNFT.attackDamage}`}</h4>
+            </div>
+          </div>
+        </div>
+      </div>
+    )}
     </div>
   );
 };
