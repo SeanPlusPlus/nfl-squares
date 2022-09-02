@@ -15,7 +15,7 @@ const Arena = ({ characterNFT }) => {
   // State
   const [gameContract, setGameContract] = useState(null);
   const [boss, setBoss] = useState(null);
-
+  const [attackState, setAttackState] = useState('');
 
   // UseEffects
   useEffect(() => {
@@ -54,14 +54,28 @@ const Arena = ({ characterNFT }) => {
     }
   }, []);
 
-  const runAttackAction = async () => {};
+  const runAttackAction = async () => {
+    try {
+      if (gameContract) {
+        setAttackState('attacking');
+        console.log('Attacking boss...');
+        const attackTxn = await gameContract.attackBoss();
+        await attackTxn.wait();
+        console.log('attackTxn:', attackTxn);
+        setAttackState('hit');
+      }
+    } catch (error) {
+      console.error('Error attacking boss:', error);
+      setAttackState('');
+    }
+  };
 
   return (
     <div className="text-center">
       {/* Boss */}
       {boss && (
       <div className="">
-        <div className="">
+        <div className={`boss-content ${attackState}`}>
           <h2>🔥 {boss.name} 🔥</h2>
           <div className="text-center mx-auto">
             <img src={boss.imageURI} alt={`Boss ${boss.name}`} className="h-80 object-scale-down mx-auto mb-2" />
