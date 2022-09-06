@@ -57,17 +57,12 @@ const Nav = () => {
                       Profile
                     </button>
                   </li>
-                  <li>
-                    <Link href="/">
-                      <button className="mr-2 link link-hover" onClick={handleLogin}>Login</button>
-                    </Link>
-                  </li>
                 </ul>
               </div>
             </>
           ) : (
             <>
-              <button className="mr-2 link link-hover" onClick={handleLogin}>Login</button>
+              <button className="mr-2 btn btn-outline" onClick={handleLogin}>Connect Wallet</button>
             </>
           )}
         </div>
