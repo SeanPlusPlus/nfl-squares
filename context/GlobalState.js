@@ -5,12 +5,13 @@ import React, {
 } from 'react';
 import AppReducer from '../reducers/AppReducer';
 import { log } from '../utils/logger'
+import { CONTRACT_ADDRESS } from '../utils/contract'
 
 const { env: { NODE_ENV }} = process
 
 const initialState = {
   NODE_ENV,
-  CONTRACT_ADDRESS: '0xFA5cbBE22A6841dE111DC886BDfEA30FDaC3b838',
+  CONTRACT_ADDRESS,
   account: null,
   networkVersion: null,
 }
