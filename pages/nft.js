@@ -14,10 +14,9 @@ const NFT = () => {
 
   const {
     CONTRACT_ADDRESS,
+    CONTRACT_NETWORK,
     setNetworkVersion,
   } = useContext(GlobalContext)
-
-  const networkContract = 'Polygon Mumbai'
   
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
@@ -80,13 +79,17 @@ const NFT = () => {
     }
   };
 
+  const handleRefresh = () => {
+    window.location.reload(false);
+  }
+
   useEffect(() => {
     checkIfWalletIsConnected();
 
     const checkNetwork = async () => {
       setNetworkVersion(window.ethereum.networkVersion)
       try { 
-        if (window.ethereum.networkVersion !== '80001') {
+        if (window.ethereum.networkVersion !== CONTRACT_NETWORK.id) {
           setNetworkVersionWarning('modal-open')
         } else {
           setNetworkVersionWarning('')
@@ -191,9 +194,15 @@ const NFT = () => {
             </div>
           </h3>
           <div>
-            <p className="pb-4 pt-4">
-              Connect your wallet to the <code className="border p-1 rounded">{networkContract}</code> network
+            <p className="pb-2 pt-4">
+              Connect your wallet to the <code className="border p-1 rounded">{CONTRACT_NETWORK.name}</code> network
             </p>
+            <p className="pb-4 pt-1">
+              Then refresh the page
+            </p>
+          </div>
+          <div className="modal-action">
+            <button className="btn" onClick={handleRefresh}>Refresh</button>
           </div>
         </div>
       </div>
