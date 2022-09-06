@@ -16,6 +16,8 @@ const NFT = () => {
     CONTRACT_ADDRESS,
     setNetworkVersion,
   } = useContext(GlobalContext)
+
+  const networkContract = 'Polygon Mumbai'
   
   const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
@@ -183,16 +185,18 @@ const NFT = () => {
       <div className={`modal ${networkVersionWarning}`}>
         <div className="modal-box relative">
           <h3 className="font-bold text-xl flex">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M11.412 15.655L9.75 21.75l3.745-4.012M9.257 13.5H3.75l2.659-2.849m2.048-2.194L14.25 2.25 12 10.5h8.25l-4.707 5.043M8.457 8.457L3 3m5.457 5.457l7.086 7.086m0 0L21 21" />
-            </svg>
-            <span className="ml-1 text-xl mb-4">
-              Metamask Network
-            </span>
+            <div className="alert alert-warning shadow-lg">
+              <div>
+                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+                <span>Heads Up</span>
+              </div>
+            </div>
           </h3>
           <div>
-            <p className="pb-4">
-              Heads up! You need to connect to the Polygon Mumbai Network
+            <p className="pb-4 pt-4">
+              Connect your wallet to the <code className="border p-1 rounded">{networkContract}</code> network
             </p>
           </div>
         </div>
