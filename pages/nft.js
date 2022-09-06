@@ -138,10 +138,6 @@ const NFT = () => {
     if (!currentAccount) {
       return (
         <div className="text-center">
-          <img
-            src="https://64.media.tumblr.com/tumblr_mbia5vdmRd1r1mkubo1_500.gifv"
-            alt="Monty Python Gif"
-          />
           <button
             className="btn mt-2"
             onClick={connectWalletAction}
