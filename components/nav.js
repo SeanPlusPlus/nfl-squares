@@ -1,21 +1,20 @@
 import Link from 'next/link'
-import { useContext, useEffect, useState } from 'react'
+import { useContext, useEffect } from 'react'
 import { GlobalContext } from '../context/GlobalState'
 import { truncatePublicKey } from '../utils/wallet'
 
 // components
 import About from './modals/About'
 import Profile from './modals/Profile'
+import NetworkWarning from './modals/NetworkWarning'
 
 const Nav = () => {
-  const [networkVersionWarning, setNetworkVersionWarning] = useState('')
- 
   const {
     setModal,
     account,
     setAccount,
+    networkVersion,
     setNetworkVersion,
-    CONTRACT_ADDRESS,
     CONTRACT_NETWORK,
   } = useContext(GlobalContext)
  
@@ -27,11 +26,12 @@ const Nav = () => {
     setModal({about: 'modal-open'})
   }
 
-  const handleRefresh = () => {
-    window.location.reload(false);
-  }
-
   const connectWalletAction = async () => {
+    if (networkVersion !== CONTRACT_NETWORK.id) {
+      setModal({networkVersionWarning: 'modal-open'})
+      return
+    }
+
     try {
       const { ethereum } = window;
 
@@ -60,6 +60,7 @@ const Nav = () => {
   };
 
   const checkIfWalletIsConnected = async () => {
+    setNetworkVersion(window.ethereum.networkVersion)
     try {
       const { ethereum } = window;
 
@@ -93,21 +94,6 @@ const Nav = () => {
 
   useEffect(() => {
     checkIfWalletIsConnected();
-
-    const checkNetwork = async () => {
-      setNetworkVersion(window.ethereum.networkVersion)
-      try { 
-        if (window.ethereum.networkVersion !== CONTRACT_NETWORK.id) {
-          // setNetworkVersionWarning('modal-open')
-          console.log('network warning');
-        } else {
-          setNetworkVersionWarning('')
-        }
-      } catch(error) {
-        console.log(error)
-      }
-    }
-    checkNetwork();
   }, []);
 
   useEffect(() => {
@@ -154,34 +140,9 @@ const Nav = () => {
         </div>
       </div>
 
-      <div className={`modal ${networkVersionWarning}`}>
-        <div className="modal-box relative">
-          <h3 className="font-bold text-xl flex">
-            <div className="alert alert-warning shadow-lg">
-              <div>
-                <svg xmlns="http://www.w3.org/2000/svg" className="stroke-current flex-shrink-0 h-6 w-6" fill="none" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-                </svg>
-                <span>Heads Up</span>
-              </div>
-            </div>
-          </h3>
-          <div>
-            <p className="pb-2 pt-4">
-              Connect your wallet to the <code className="border p-1 rounded">{CONTRACT_NETWORK.name}</code> network
-            </p>
-            <p className="pb-4 pt-1">
-              Then refresh the page
-            </p>
-          </div>
-          <div className="modal-action">
-            <button className="btn" onClick={handleRefresh}>Refresh</button>
-          </div>
-        </div>
-      </div>
-
       <About />
       <Profile />
+      <NetworkWarning />
     </>
   )
 }
