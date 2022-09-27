@@ -5,9 +5,9 @@ import { truncatePublicKey } from '../utils/wallet'
 
 // components
 import About from './modals/About'
+import Profile from './modals/Profile'
 
 const Nav = () => {
-  const [modalProfile, setModalProfile] = useState('')
   const [networkVersionWarning, setNetworkVersionWarning] = useState('')
  
   const {
@@ -20,11 +20,7 @@ const Nav = () => {
   } = useContext(GlobalContext)
  
   const handleOpenProfile = () => {
-    setModalProfile('modal-open')
-  }
-
-  const handleCloseProfile = () => {
-    setModalProfile('')
+    setModal({profile: 'modal-open'})
   }
 
   const handleOpenAbout = () => {
@@ -158,30 +154,6 @@ const Nav = () => {
         </div>
       </div>
 
-      { account && (
-        <div className={`modal ${modalProfile}`}>
-          <div className="modal-box">
-            <h3 className="font-bold text-xl flex">
-              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-                <path strokeLinecap="round" strokeLinejoin="round" d="M5.121 17.804A13.937 13.937 0 0112 16c2.5 0 4.847.655 6.879 1.804M15 10a3 3 0 11-6 0 3 3 0 016 0zm6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-              <span className="ml-1 text-xl mb-4">
-                Account
-              </span>
-            </h3>
-            <p className="pt-4">
-              Public Key:
-              <br />
-              <code className="font-semibold text-xs">{account.publicKey}</code>
-            </p>
-            <div className="modal-action pt-5">
-              <label htmlFor="my-modal" className="btn" onClick={handleCloseProfile}>Close</label>
-            </div>
-          </div>
-        </div>
-      )}
-
-
       <div className={`modal ${networkVersionWarning}`}>
         <div className="modal-box relative">
           <h3 className="font-bold text-xl flex">
@@ -209,6 +181,7 @@ const Nav = () => {
       </div>
 
       <About />
+      <Profile />
     </>
   )
 }
