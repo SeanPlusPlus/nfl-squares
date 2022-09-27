@@ -15,10 +15,14 @@ const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
   // State
   const [gameContract, setGameContract] = useState(null);
   const [boss, setBoss] = useState(null);
+  const [playerHp, setPlayerHp] = useState(null);
   const [attackState, setAttackState] = useState('');
+
 
   // UseEffects
   useEffect(() => {
+    setPlayerHp(characterNFT.hp)
+
     const fetchBoss = async () => {
         const bossTxn = await gameContract.getBigBoss();
         console.log('Boss:', bossTxn);
@@ -30,10 +34,11 @@ const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
     */
     const onAttackComplete = (from, newBossHp, newPlayerHp) => {
         const bossHp = newBossHp.toNumber();
-        const playerHp = newPlayerHp.toNumber();
+        const playerHpNum = newPlayerHp.toNumber();
         const sender = from.toString();
 
-        console.log(`AttackComplete: Boss Hp: ${bossHp} Player Hp: ${playerHp}`);
+        console.log(`AttackComplete: Boss Hp: ${bossHp} Player Hp: ${playerHpNum}`);
+        setPlayerHp(playerHpNum)
 
         /*
         * If player is our own, update both player and boss Hp
@@ -144,7 +149,7 @@ const Arena = ({ characterNFT, setCharacterNFT, currentAccount }) => {
               />
               <div className="">
                 <progress value={characterNFT.hp} max={characterNFT.maxHp} />
-                <p>{`${characterNFT.hp} / ${characterNFT.maxHp} HP`}</p>
+                <p>{`${playerHp} / ${characterNFT.maxHp} HP`}</p>
               </div>
             </div>
             <div className="">

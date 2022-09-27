@@ -14,10 +14,9 @@ const NFT = () => {
 
   const {
     CONTRACT_ADDRESS,
-    CONTRACT_NETWORK,
+    account,
   } = useContext(GlobalContext)
   
-  const [currentAccount, setCurrentAccount] = useState(null);
   const [characterNFT, setCharacterNFT] = useState(null);
 
   useEffect(() => {
@@ -25,7 +24,7 @@ const NFT = () => {
      * The function we will call that interacts with our smart contract
      */
     const fetchNFTMetadata = async () => {
-      console.log('Checking for Character NFT on address:', currentAccount);
+      console.log('Checking for Character NFT on address:', account);
   
       const provider = new ethers.providers.Web3Provider(window.ethereum);
       const signer = provider.getSigner();
@@ -47,17 +46,17 @@ const NFT = () => {
     /*
      * We only want to run this, if we have a connected wallet
      */
-    if (currentAccount) {
-      console.log('CurrentAccount:', currentAccount);
+    if (account) {
+      console.log('Account:', account);
       fetchNFTMetadata();
     }
-  }, [currentAccount]);
+  }, [account]);
 
   const renderContent = () => {
     /*
      * Scenario #1
      */
-    if (!currentAccount) {
+    if (!account) {
       return (
         <div className="text-center">
           <button
@@ -70,10 +69,10 @@ const NFT = () => {
       /*
        * Scenario #2
        */
-    } else if (currentAccount && !characterNFT) {
+    } else if (account && !characterNFT) {
       return <SelectCharacter setCharacterNFT={setCharacterNFT} />;
-    } else if (currentAccount && characterNFT) {
-      return <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} currentAccount={currentAccount} />
+    } else if (account && characterNFT) {
+      return <Arena characterNFT={characterNFT} setCharacterNFT={setCharacterNFT} account={account} />
     }
   };
 
