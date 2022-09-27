@@ -45,7 +45,7 @@ export const GlobalProvider = ({
 
   return ( <GlobalContext.Provider value = {
       {
-        ...initialState,
+        ...state,
         setAccount,
         setNetworkVersion,
       }
