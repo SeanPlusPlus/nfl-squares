@@ -4,14 +4,14 @@ import { GlobalContext } from '../context/GlobalState'
 import { truncatePublicKey } from '../utils/wallet'
 
 // components
-import About from './about'
+import About from './modals/About'
 
 const Nav = () => {
-  const [modalAbout, setModalAbout] = useState('')
   const [modalProfile, setModalProfile] = useState('')
   const [networkVersionWarning, setNetworkVersionWarning] = useState('')
  
   const {
+    setModal,
     account,
     setAccount,
     setNetworkVersion,
@@ -28,11 +28,7 @@ const Nav = () => {
   }
 
   const handleOpenAbout = () => {
-    setModalAbout('modal-open')
-  }
-
-  const handleCloseAbout = () => {
-    setModalAbout('')
+    setModal({about: 'modal-open'})
   }
 
   const handleRefresh = () => {
@@ -185,15 +181,6 @@ const Nav = () => {
         </div>
       )}
 
-      <div className={`modal ${modalAbout}`}>
-        <div className="modal-box relative">
-          <label htmlFor="my-modal-3" className="btn btn-sm btn-circle absolute right-2 top-2" onClick={handleCloseAbout}>✕</label>
-          <About />
-          <div className="modal-action pt-5">
-            <label htmlFor="my-modal" className="btn" onClick={handleCloseAbout}>Close</label>
-          </div>
-        </div>
-      </div>
 
       <div className={`modal ${networkVersionWarning}`}>
         <div className="modal-box relative">
@@ -220,6 +207,8 @@ const Nav = () => {
           </div>
         </div>
       </div>
+
+      <About />
     </>
   )
 }

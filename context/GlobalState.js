@@ -10,9 +10,13 @@ import { CONTRACT_ADDRESS, CONTRACT_NETWORK } from '../utils/contract'
 const { env: { NODE_ENV }} = process
 
 const initialState = {
+  // CONSTANTS
   NODE_ENV,
   CONTRACT_ADDRESS,
   CONTRACT_NETWORK,
+
+  // variable
+  modal: {},
   account: null,
   networkVersion: null,
 }
@@ -25,6 +29,13 @@ export const GlobalProvider = ({
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   // Actions for changing state
+  function setModal(data) {
+    dispatch({
+      type: 'UPDATE_MODAL',
+      payload: data
+    });
+  }
+
   function setAccount(data) {
     dispatch({
       type: 'UPDATE_ACCOUNT',
@@ -46,6 +57,7 @@ export const GlobalProvider = ({
   return ( <GlobalContext.Provider value = {
       {
         ...state,
+        setModal,
         setAccount,
         setNetworkVersion,
       }

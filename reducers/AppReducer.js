@@ -7,6 +7,11 @@ export default (state, action) => {
   log('action', 'rgb(251, 189, 35)', action);
 
   switch (action.type) {
+    case 'UPDATE_MODAL':
+      return {
+        ...state,
+        modal: action.payload,
+      }
     case 'UPDATE_ACCOUNT':
       return {
         ...state,
