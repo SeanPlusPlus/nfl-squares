@@ -16,9 +16,9 @@ const Home = () => {
       <div className="hero bg-base-200 min-h-screen">
         <div className="hero-content text-center mb-64">
           <div className="max-w-md">
-            <h1 className="text-5xl font-bold">NFL Squares</h1>
+            <h1 className="text-5xl font-bold">Menu XYZ</h1>
             <p className="py-6">
-              Super Bowl Squares all season long
+              Blockchain powered restaurant menus
             </p>
             <button className="btn btn-primary" onClick={handleOpen}>About</button>
           </div>

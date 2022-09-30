@@ -22,7 +22,7 @@ const About = () => {
         </h3>
         <div>
           <p className="pb-4">
-            NFL Squares is a block chain powered game that enables Super Bowl Squares all season long.
+            Blockchain powered restaurant menus
           </p>
         </div>
         <div className="modal-action pt-5">

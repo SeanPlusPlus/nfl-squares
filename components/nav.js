@@ -106,7 +106,7 @@ const Nav = () => {
         <div className="flex-1">
           <Link href="/">
             <button className="btn btn-outline normal-case text-xl ml-2">
-              <span className="text-slate-300">NFL Squares</span>
+              <span className="text-slate-300">Menux XYZ</span>
             </button>
           </Link>
         </div>
